@@ -24,9 +24,6 @@ namespace Engine
      */
     class Platform
     {
-        protected:
-            // Protected members can be added here if needed
-
         public:
             /**
              * @brief Default constructor for the Platform class.
@@ -95,4 +92,4 @@ namespace Engine
     };
 } // namespace Engine
 
-# endif // PLATFORM_HPP
+#endif // PLATFORM_HPP

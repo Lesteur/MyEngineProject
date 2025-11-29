@@ -2,14 +2,15 @@
  * @file PCPlatform.hpp
  * @brief The PCPlatform class provides a platform-specific implementation for PC systems.
  *
+ * This class inherits from the Platform interface and implements methods for initializing
+ * the platform, clearing the screen, drawing text, presenting rendered content, and introducing delays.
  */
 #ifndef PCPLATFORM_HPP
 #define PCPLATFORM_HPP
 
 #include "platform/Platform.hpp"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <SDL2/SDL.h>
 
 namespace Engine
 {
@@ -28,7 +29,8 @@ namespace Engine
             static const int SCREEN_HEIGHT = 160 * 4; ///< Height of the screen in pixels.
         
         private:
-            GLFWwindow * window = nullptr;    ///< Pointer to the GLFW window.
+            SDL_Window * window = nullptr;    ///< Pointer to the SDL window.
+            SDL_Renderer * renderer = nullptr;///< Pointer to the SDL renderer.
 
         public:
             /**
@@ -61,7 +63,7 @@ namespace Engine
              * @param x The x-coordinate where the text should be drawn.
              * @param y The y-coordinate where the text should be drawn.
              */
-            void DrawText(const std::string& text, int x, int y) override;
+            void DrawText(const std::string& text, int x, int y) override; // Ignore this for now
 
             /**
              * @brief Presents the rendered content on the screen.

@@ -17,7 +17,7 @@ CXXFLAGS	:=	-std=c++17 -O2 -Wall -Wextra -Wpedantic \
 				-I$(INC_DIR) -I$(GEN_DIR)/graphics -I$(GEN_DIR)/palettes
 
 # Linker flags
-LDFLAGS		:=	-lGL -lGLEW -lglfw
+LDFLAGS		:=	`sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_net -lSDL2_gfx -lm
 
 # Data files
 GRAPHICS	:=	$(wildcard $(DATA_DIR)/graphics/*.png)
@@ -50,7 +50,7 @@ $(TARGET): $(OBJ) $(GRAPHICS_OBJ) $(PALETTES_OBJ)
 	@echo "Build complete: $@"
 
 # Compile step
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(PALETTES_INC) $(GRAPHICS_INC)
 	@mkdir -p $(dir $@)
 	@echo "Compiling $<"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -97,5 +97,6 @@ run: $(TARGET)
 clean:
 	@echo "Cleaning build directory for $(PLATFORM)..."
 	rm -rf $(BUILD_DIR)
+	rm -rf $(GEN_DIR)
 
 .PHONY: all clean run

@@ -16,17 +16,17 @@ namespace Engine
 
     void Game::Run()
     {
-        Sprite sprite(image_image, image_palette);
-
         if (!platform.Init())
             return; // Initialization failed, exit the game loop
+        
+        Sprite sprite(image_image, image_palette);
 
         while (frameCounter < 300)
         {
             platform.ClearScreen();
 
-            platform.DrawSprite(10, 10, sprite);
-            platform.DrawSprite(30, 30, sprite);
+            platform.DrawSprite(10, 10, sprite); // Example usage of DrawSprite
+            platform.DrawSprite(20, 20, sprite);
 
             platform.Present();
 

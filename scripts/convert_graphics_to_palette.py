@@ -34,10 +34,12 @@ def convert_png_to_indexed(png_path, hpp_path):
         r = palette[i * 3 + 0]
         g = palette[i * 3 + 1]
         b = palette[i * 3 + 2]
-        # Transparency is not provided by palette[], it is deduced from the original image
-        # by looking for a pixel with the same index in indexed_img:
-        # For simplicity, set alpha = 255 for all.
+        # Find alpha from original image
         a = 255
+        for count, color in colors:
+            if (color[0], color[1], color[2]) == (r, g, b):
+                a = color[3]
+                break
         pal_rgba.append((r, g, b, a))
 
     # Generation of the .hpp

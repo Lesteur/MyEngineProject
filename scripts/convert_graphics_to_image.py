@@ -24,9 +24,10 @@ def convert_png_to_indexed(png_path, hpp_path):
     quantize_colors = unique_count
 
     # Quantization of the image to indexed palette
-    indexed_img = img.convert("P", palette=Image.ADAPTIVE, colors=quantize_colors)
-    palette = indexed_img.getpalette()  # List R,G,B,... repeated 256 times
-    pixels = list(indexed_img.getdata())
+    # Get Red, Green, Blue and Alpha palette
+    img_indexed = img.convert("P", palette=Image.ADAPTIVE, colors=quantize_colors)
+    palette = img_indexed.getpalette()
+    pixels = list(img_indexed.getdata())
 
     # Reconstruction of the RGBA palette on palette_size values
     pal_rgba = []
@@ -34,10 +35,12 @@ def convert_png_to_indexed(png_path, hpp_path):
         r = palette[i * 3 + 0]
         g = palette[i * 3 + 1]
         b = palette[i * 3 + 2]
-        # Transparency is not provided by palette[], it is deduced from the original image
-        # by looking for a pixel with the same index in indexed_img:
-        # For simplicity, set alpha = 255 for all.
+        # Find alpha from original image
         a = 255
+        for count, color in colors:
+            if (color[0], color[1], color[2]) == (r, g, b):
+                a = color[3]
+                break
         pal_rgba.append((r, g, b, a))
 
     # Generation of the .hpp
